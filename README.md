@@ -16,3 +16,6 @@
 brewのpythonの場合=>https://zenn.dev/thanai/articles/60843ae33bd4e2745d56
 
 pyenvの場合=>https://zenn.dev/spacegeek/articles/3f8db1ffcd401e
+
+### こちらの記事のコードを元に作成しました.
+https://sasuwo.org/get-images-automatically-for-python/
