@@ -2,6 +2,8 @@
 Google画像検索から好きな画像を大量に保存できます!!
 
 使用方法
+- Windowsでは動作しないようです。
+- mac(m1)ubuntu(intel)で動作確認済みです。
 - python3 必要です。(テスト済みバージョン 3.7,3.8,3.10.4)
 - 使用しているChromeに対応したChrome driverが必要です。
 - chrome driverはs.pyと同じディレクトリに配置してください。
