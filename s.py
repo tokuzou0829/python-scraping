@@ -239,7 +239,8 @@ for tmb_elem, tmb_alt in zip(tmb_elems, tmb_alts):
         "url": url
         })
         response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
-        serverimg.append(f'{filename}: {response.text}')
+        jsonData = response.json()
+        serverimg.append(f'{filename}: {jsonData["url"]}')
         url_list.append(f'{filename}: {url}')
     else:
         url_list.append(f'{filename}: {url}')
