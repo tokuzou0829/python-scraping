@@ -48,7 +48,7 @@ while True:
         
         show_message = "検索内容：" + QUERY + 'が入力されました。\n'
         show_message += "最大検索回数：" + search_count + 'が入力されました。\n'
-        show_message += "ジャンル：" + savedir + 'が入力されました。\n'
+        show_message += "ジャンル：" + title + 'が入力されました。\n'
         show_message += "ジャンルの中に作られるフォルダ名：" + charactername + "が入力されました。\n"
         show_message += "保存先フォルダ："+savedir+'/'+title +'/'+charactername+"に保存されます。\n"
         show_message += "スクレイピングした画像はサーバーに" + servercheck + "。\n"
