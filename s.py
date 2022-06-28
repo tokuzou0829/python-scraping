@@ -263,21 +263,21 @@ print(count_str)
 urldirpath = SAVE_DIR + '/url'
 os.mkdir(urldirpath)
 if server == str("True"):
-    path = SAVE_DIR + '/url/' + '_url.txt'
+    path = SAVE_DIR + '/url/' + 'Download-Url.txt'
     with open(path, 'w', encoding='utf-8') as f:
         f.write(dt_date_str + '\n')
         f.write(total_str + '\n')
         f.write(count_str + '\n')
         f.write('\n'.join(url_list))
 
-    path = SAVE_DIR + '/url/' + '_url-TokuzouServerIMG.txt'
+    path = SAVE_DIR + '/url/' + 'ShareUrl-TokuzouServerIMG.txt'
     with open(path, 'w', encoding='utf-8') as f:
         f.write(dt_date_str + '\n')
         f.write(total_str + '\n')
         f.write(count_str + '\n')
         f.write('\n'.join(serverimg))
 else:
-    path = SAVE_DIR + '/url/' + '_url.txt'
+    path = SAVE_DIR + '/url/' + 'Download-Url.txt'
     with open(path, 'w', encoding='utf-8') as f:
         f.write(dt_date_str + '\n')
         f.write(total_str + '\n')
