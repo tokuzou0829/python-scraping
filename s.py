@@ -16,6 +16,7 @@ sg.theme('Dark Blue 3')
 layout = [
     [sg.Text('何の画像が必要ですか?', text_color='#000', background_color='#fff', font=('Arial',20))],
     [sg.Text('検索内容', size=(15, 1), text_color='#000', background_color='#fff'), sg.InputText('キャラクターの名前とか(中野三玖)')],
+    [sg.Text('最大検索回数', size=(15, 1), text_color='#000', background_color='#fff'), sg.InputText('1~400')],
     [sg.Text('ジャンル', size=(15, 1), text_color='#000', background_color='#fff'), sg.InputText('アニメ名とか?(五等分の花嫁)')],
     [sg.Text('ジャンルの中に作られるフォルダ名', size=(15, 1), text_color='#000', background_color='#fff'), sg.InputText('キャラクターの名前とか(中野三玖)')],
     [sg.Text("保存先フォルダ", text_color='#000', background_color='#fff'), sg.InputText(), sg.FolderBrowse()],
@@ -35,20 +36,22 @@ while True:
     if event == '実行ボタン':
         window.close()
         QUERY = values[0]
-        title = values[1]
-        charactername = values[2]
-        savedir = values[3]
-        server = str(values[4])
+        search_count = str(values[1])
+        title = values[2]
+        charactername = values[3]
+        savedir = values[4]
+        server = str(values[5])
         if server == str("True"):
             servercheck = "保存されます"
         else:
             servercheck = "保存されません"
         
-        show_message = "検索内容：" + values[0] + 'が入力されました。\n'
-        show_message += "ジャンル：" + values[1] + 'が入力されました。\n'
-        show_message += "ジャンルの中に作られるフォルダ名：" + values[2] + "が入力されました。\n"
+        show_message = "検索内容：" + QUERY + 'が入力されました。\n'
+        show_message += "最大検索回数：" + search_count + 'が入力されました。\n'
+        show_message += "ジャンル：" + savedir + 'が入力されました。\n'
+        show_message += "ジャンルの中に作られるフォルダ名：" + charactername + "が入力されました。\n"
         show_message += "保存先フォルダ："+savedir+'/'+title +'/'+charactername+"に保存されます。\n"
-        show_message += "スクレイピングした画像はサーバーに" + servercheck + "。"
+        show_message += "スクレイピングした画像はサーバーに" + servercheck + "。\n"
         print(show_message)
         # ポップアップ
         sg.popup(show_message + 'ポップアウトを閉じるとスタートします。')
@@ -60,7 +63,7 @@ tm_start = time.time()            #処理時間計測用
 dt_now = datetime.datetime.now()  # 現在日時
 dt_date_str = dt_now.strftime('%Y/%m/%d %H:%M')
 print("開始時間:" + dt_date_str)
-LIMIT_DL_NUM = 10                 # ダウンロード数の上限
+LIMIT_DL_NUM = int(search_count)                 # ダウンロード数の上限
 SAVE_DIR = savedir + '/' + title + '/' + charactername                 # 出力フォルダへのパス（フォルダがない場合は自動生成する）
 FILE_NAME = charactername                          # ファイル名（ファイル名の後ろに０からの連番と拡張子が付く）
 TIMEOUT = 100                             # 要素検索のタイムアウト（秒）
@@ -279,5 +282,5 @@ else:
         f.write(total_str + '\n')
         f.write(count_str + '\n')
         f.write('\n'.join(url_list))
-        
+
 driver.quit()
