@@ -2,6 +2,8 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import os
+import requests
+import json
 import time
 import datetime
 from selenium.common.exceptions import NoSuchElementException
@@ -17,6 +19,7 @@ layout = [
     [sg.Text('ジャンル', size=(15, 1), text_color='#000', background_color='#fff'), sg.InputText('アニメ名とか?(五等分の花嫁)')],
     [sg.Text('ジャンルの中に作られるフォルダ名', size=(15, 1), text_color='#000', background_color='#fff'), sg.InputText('キャラクターの名前とか(中野三玖)')],
     [sg.Text("保存先フォルダ", text_color='#000', background_color='#fff'), sg.InputText(), sg.FolderBrowse()],
+    [sg.Checkbox("TokuzouServerIMGに保存する", text_color='#000', background_color='#fff', default=False)],
     [sg.Submit(button_text='実行ボタン')]
 ]
 # セクション 2 - ウィンドウの生成
@@ -35,18 +38,18 @@ while True:
         title = values[1]
         charactername = values[2]
         savedir = values[3]
+        server = str(values[4])
+        if server == str("True"):
+            servercheck = "保存されます"
+        else:
+            servercheck = "保存されません"
+        
         show_message = "検索内容：" + values[0] + 'が入力されました。\n'
         show_message += "ジャンル：" + values[1] + 'が入力されました。\n'
-        show_message += "ジャンルの中に作られるフォルダ名：" + values[2] + "が入力されました。"
-        show_message += "保存先フォルダ："+savedir+'/'+title +'/'+charactername+"に保存されます。"
+        show_message += "ジャンルの中に作られるフォルダ名：" + values[2] + "が入力されました。\n"
+        show_message += "保存先フォルダ："+savedir+'/'+title +'/'+charactername+"に保存されます。\n"
+        show_message += "スクレイピングした画像はサーバーに" + servercheck + "。"
         print(show_message)
-        
-        QUERY = values[0]
-        title = values[1]
-        charactername = values[2]
-        savedir = values[3]
-
-
         # ポップアップ
         sg.popup(show_message + 'ポップアウトを閉じるとスタートします。')
 
@@ -57,14 +60,18 @@ tm_start = time.time()            #処理時間計測用
 dt_now = datetime.datetime.now()  # 現在日時
 dt_date_str = dt_now.strftime('%Y/%m/%d %H:%M')
 print("開始時間:" + dt_date_str)
-LIMIT_DL_NUM = 400                 # ダウンロード数の上限
+LIMIT_DL_NUM = 10                 # ダウンロード数の上限
 SAVE_DIR = savedir + '/' + title + '/' + charactername                 # 出力フォルダへのパス（フォルダがない場合は自動生成する）
 FILE_NAME = charactername                          # ファイル名（ファイル名の後ろに０からの連番と拡張子が付く）
 TIMEOUT = 100                             # 要素検索のタイムアウト（秒）
 ACCESS_WAIT = 5                             # アクセスする間隔（秒）
 RETRY_NUM = 3                           # リトライ回数（クリック、requests）
 DRIVER_PATH = './chromedriver'       # chromedriver.exeへのパス
- 
+reqUrl = "https://img.tokuzouserver.net/"
+headersList = {
+ "Content-Type": "application/json" 
+}
+
 # Chromeをヘッドレスモードで起動
 options = Options()
 options.add_argument('--headless')
@@ -158,6 +165,7 @@ print('サムネイル画像取得', f'{tm_thumbnails - tm_geturl:.1f}s')
 EXCLUSION_URL = 'https://lh3.googleusercontent.com/'  # 除外対象url
 count = 0
 url_list = []
+serverimg = []
 for tmb_elem, tmb_alt in zip(tmb_elems, tmb_alts):
      
     if tmb_alt == '':
@@ -223,7 +231,15 @@ for tmb_elem, tmb_alt in zip(tmb_elems, tmb_alts):
     if result == False:
         print('***** キャンセル')
         continue
-    url_list.append(f'{filename}: {url}')
+    if server == str("True"):
+        payload = json.dumps({
+        "url": url
+        })
+        response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
+        serverimg.append(f'{filename}: {response.text}')
+        url_list.append(f'{filename}: {url}')
+    else:
+        url_list.append(f'{filename}: {url}')
  
     # ダウンロード数の更新と終了判定
     count += 1
@@ -242,11 +258,26 @@ print(count_str)
 # urlをファイルへ保存
 urldirpath = SAVE_DIR + '/url'
 os.mkdir(urldirpath)
-path = SAVE_DIR + '/url/' + '_url.txt'
-with open(path, 'w', encoding='utf-8') as f:
-    f.write(dt_date_str + '\n')
-    f.write(total_str + '\n')
-    f.write(count_str + '\n')
-    f.write('\n'.join(url_list))
- 
+if server == str("True"):
+    path = SAVE_DIR + '/url/' + '_url.txt'
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(dt_date_str + '\n')
+        f.write(total_str + '\n')
+        f.write(count_str + '\n')
+        f.write('\n'.join(url_list))
+
+    path = SAVE_DIR + '/url/' + '_url-TokuzouServerIMG.txt'
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(dt_date_str + '\n')
+        f.write(total_str + '\n')
+        f.write(count_str + '\n')
+        f.write('\n'.join(serverimg))
+else:
+    path = SAVE_DIR + '/url/' + '_url.txt'
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(dt_date_str + '\n')
+        f.write(total_str + '\n')
+        f.write(count_str + '\n')
+        f.write('\n'.join(url_list))
+        
 driver.quit()
