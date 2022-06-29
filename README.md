@@ -27,3 +27,6 @@ pyenvの場合=>https://zenn.dev/spacegeek/articles/3f8db1ffcd401e
 
 ### こちらの記事のコードを元に作成しました.
 https://sasuwo.org/get-images-automatically-for-python/
+
+### ChromeDriver
+https://chromedriver.chromium.org/downloads
