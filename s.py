@@ -68,13 +68,13 @@ while True:
         show_message += "ジャンル：" + title + 'が入力されました。\n'
         show_message += "ジャンルの中に作られるフォルダ名：" + charactername + "が入力されました。\n"
         show_message += "保存先フォルダ："+savedir+'/'+title +'/'+charactername+"に保存されます。\n"
-        show_message += "スクレイピングした画像はサーバーに" + servercheck + "。\n"
+        show_message += "スクレイピングした画像はサーバーに" + servercheck + "。"
         print(show_message)
         # ポップアップ
-        sg.popup(show_message + 'ポップアウトを閉じるとスタートします。')
+        # sg.popup(show_message + 'ポップアウトを閉じるとスタートします。')
 
 # セクション 4 - ウィンドウの破棄と終了
-window.close()
+# window.close()
 
 tm_start = time.time()            #処理時間計測用
 dt_now = datetime.datetime.now()  # 現在日時
