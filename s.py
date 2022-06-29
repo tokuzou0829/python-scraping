@@ -9,6 +9,12 @@ import datetime
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
 import PySimpleGUI as sg
+from pyfiglet import Figlet
+import warnings
+warnings.simplefilter('ignore')
+f = Figlet(font="slant")
+msg = f.renderText("PythonScraping")
+print(msg)
 
 #  セクション1 - オプションの設定と標準レイアウト
 sg.theme('Dark Blue 3')
