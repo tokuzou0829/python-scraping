@@ -1,13 +1,12 @@
 # パッケージインポート関係
 import warnings
 warnings.simplefilter('ignore', FutureWarning)
-import pip, site, importlib
-pip.main(['install', '--user', 'requests', '-q']) 
-pip.main(['install', '--user', 'selenium', '-q']) 
-pip.main(['install', '--user', 'PySimpleGUI', '-q']) 
-pip.main(['install', '--user', 'pyfiglet', '-q']) 
-
-importlib.reload(site)
+import subprocess
+import sys
+subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "-q"])
+subprocess.check_call([sys.executable, "-m", "pip", "install", "selenium", "-q"])
+subprocess.check_call([sys.executable, "-m", "pip", "install", "PySimpleGUI", "-q"])
+subprocess.check_call([sys.executable, "-m", "pip", "install", "pyfiglet" , "-q"])
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
