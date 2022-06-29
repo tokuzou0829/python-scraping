@@ -1,3 +1,4 @@
+# パッケージインポート関係
 import warnings
 warnings.simplefilter('ignore', FutureWarning)
 import pip, site, importlib
@@ -19,6 +20,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
 import PySimpleGUI as sg
 from pyfiglet import Figlet
+
+# タイトル表示
 f = Figlet(font="slant")
 msg = f.renderText("PythonScraping")
 print(msg)
