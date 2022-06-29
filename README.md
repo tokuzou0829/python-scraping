@@ -19,7 +19,8 @@ Google画像検索から好きな画像を大量に保存できます!!
 3. `pip install request` or `pip3 install request`
 4. `pip install selenium` or `pip3 install selenium`
 5. `pip install pysimplegui` or `pip3 install pysimplegui`
-6. `python s.py`
+6. `pip install pyfiglet` or `pip3 install pyfiglet`
+7. `python s.py`
 
 ## macを使用している場合
 実行した際のGUIが真っ暗で表示されなかった場合は次の記事を参考にしてください。
