@@ -1,3 +1,12 @@
+import warnings
+warnings.simplefilter('ignore', FutureWarning)
+import pip, site, importlib
+pip.main(['install', '--user', 'requests', '-q']) 
+pip.main(['install', '--user', 'selenium', '-q']) 
+pip.main(['install', '--user', 'PySimpleGUI', '-q']) 
+pip.main(['install', '--user', 'pyfiglet', '-q']) 
+
+importlib.reload(site)
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -10,8 +19,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
 import PySimpleGUI as sg
 from pyfiglet import Figlet
-import warnings
-warnings.simplefilter('ignore')
 f = Figlet(font="slant")
 msg = f.renderText("PythonScraping")
 print(msg)
