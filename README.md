@@ -23,6 +23,7 @@ Google画像検索から好きな画像を大量に保存できます!!
 
 ## macを使用している場合
 実行した際のGUIが真っ暗で表示されなかった場合は次の記事を参考にしてください。
+
 brewのpythonの場合=>https://zenn.dev/thanai/articles/60843ae33bd4e2745d56
 
 pyenvの場合=>https://zenn.dev/spacegeek/articles/3f8db1ffcd401e
