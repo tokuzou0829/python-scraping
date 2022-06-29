@@ -26,7 +26,7 @@ msg = f.renderText("PythonScraping")
 print(msg)
 
 #  セクション1 - オプションの設定と標準レイアウト
-sg.theme('Dark Blue 3')
+sg.theme('SystemDefault')
 
 layout = [
     [sg.Text('何の画像が必要ですか?', text_color='#000', background_color='#fff', font=('Arial',20))],
@@ -45,16 +45,18 @@ while True:
     event, values = window.read()
 
     if event is None:
-        print('exit')
+        print("入力完了")
         break
 
     if event == '実行ボタン':
         window.close()
+        
         QUERY = values[0]
         search_count = str(values[1])
         title = values[2]
         charactername = values[3]
         savedir = values[4]
+
         server = str(values[5])
         if server == str("True"):
             servercheck = "保存されます"
